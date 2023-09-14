@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -63,9 +64,46 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request, int $id)
     {
-        
+        $rules = [
+            'name'=>'string|max:255|',
+            'email'=>'email|max:255',
+            'password'=>'string|max:255',
+            'authorize_location'=>'boolean'
+        ];
+
+        $validationFailMessages = [
+            'name.max'=>'O nome não pode ter mais de 255 caracteres.',
+            'email.email'=>'O email precisa ter o formato de email. Ex.: seunome@hotmail.com.',
+            'email.max'=>'O email não pode ter mais de 255 caracteres.',
+            'password.max'=>'A senha não pode ter mais de 255 caracteres.',
+            'authorize_location.boolean'=>'O campo de "authorize_location" só aceita 1 para "true" ou 0 para "false".'
+        ];
+
+        try {            
+
+            $request->validate($rules, $validationFailMessages);
+
+            $inputs = $request->all();
+
+            $usertoUpdate = User::findOrFail($id);
+
+            foreach($inputs as $input=>$value) {
+                if(array_key_exists($input, $inputs)){
+                    $usertoUpdate->$input = $value;
+                }
+            }            
+
+            $usertoUpdate->save();
+
+            return response($usertoUpdate);                 
+
+        } catch (\Throwable $e) {
+
+            return $e->getMessage();
+
+        }
     }
 
     /**
