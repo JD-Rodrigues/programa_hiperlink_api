@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_event');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('id_event')->references('id')->on('events');
         });
     }
 
