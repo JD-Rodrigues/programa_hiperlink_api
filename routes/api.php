@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,7 @@ use App\Http\Controllers\UserController;
 // Route::put('/users/{id}', [UserController::class, 'update']);
 // Route::delete('/users/{id}', [UserController::class, 'destroy']);
 Route::apiResource('users', UserController::class);
+Route::apiResource('events', EventController::class);
 Route::post('/login', [UserController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout', [UserController::class, 'logout']);
