@@ -5,10 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
+    public function login(Request $request) 
+    {
+        $rules = [
+            'email'=>'required|email|max:255',
+            'password'=>'required|string|max:255',
+        ];
+
+        $validationFailMessages = [
+            'email.required'=>'Insira o e-mail do usuário.',
+            'email.email'=>'O email precisa ter o formato de email. Ex.: seunome@hotmail.com.',
+            'email.max'=>'O email não pode ter mais de 255 caracteres.',
+            'password.required'=>'Insira a senha do usuário.',
+            'password.max'=>'A senha não pode ter mais de 255 caracteres.',
+        ];
+
+
+        try {
+            $request->validate($rules, $validationFailMessages);
+
+            list($username) = explode('@', $request->input('email'));
+ 
+            if(auth()->attempt($request->only(['email', 'password']))) {
+                return response(
+                    [
+                        'Authorized',
+                        200,
+                        'Token:'=>$request->user()->createToken($username)->plainTextToken
+                    ]
+                    );
+            } else {
+                return response('Unauthorized', 401);
+            }
+
+        } catch (\Throwable $e) {
+            return $e->getMessage();
+        }
+
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -49,8 +88,6 @@ class UserController extends Controller
         } catch (\Throwable $e) {
             return $e->getMessage();
         }
-
-
     }
 
     /**
@@ -122,7 +159,7 @@ class UserController extends Controller
                 ],
                 200
             );
-            
+
         } catch (\Throwable $e) {
             return $e->getMessage();
         }
