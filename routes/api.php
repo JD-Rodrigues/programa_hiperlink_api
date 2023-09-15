@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +15,14 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::post('/users', [UserController::class, 'store']);
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::delete('/users/{id}', [UserController::class, 'destroy']);
+// Route::post('/users', [UserController::class, 'store']);
+// Route::get('/users', [UserController::class, 'index']);
+// Route::get('/users/{id}', [UserController::class, 'show']);
+// Route::put('/users/{id}', [UserController::class, 'update']);
+// Route::delete('/users/{id}', [UserController::class, 'destroy']);
 Route::post('/login', [UserController::class, 'login']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+Route::apiResource('users', UserController::class);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
