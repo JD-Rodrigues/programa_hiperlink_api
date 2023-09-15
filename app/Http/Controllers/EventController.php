@@ -19,9 +19,32 @@ class EventController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $rules = [
+            'title'=>'required|string|max:255|',
+            'image'=>'required|string|max:255',
+            'start_date'=>'required|date',
+        ];
+
+        $validationFailMessages = [
+            'title.required'=>'Insira o título do evento.',
+            'title.max'=>'O título não pode ter mais de 255 caracteres.',
+            'image.required'=>'Insira o nome da imagem.',
+            'image.string'=>'O nome da imagem precisa ser texto, contendo nome e extensão. Ex.: minha-imagem.jpg',
+            'start_date.required'=>'Insira a data de início do evento.',
+            'start_date.date_format'=>'A data do evento precisa seguir o formato: d-m-Y. Ex.: 03-08-2023.'
+        ];
+
+
+        try {
+            $request->validate($rules, $validationFailMessages);
+
+            return Event::create($request->only('title',  'image', 'start_date'));
+        } catch (\Throwable $e) {
+            return $e->getMessage();
+        }
     }
+
 
     /**
      * Display the specified resource.
