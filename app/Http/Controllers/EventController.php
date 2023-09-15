@@ -23,7 +23,7 @@ class EventController extends Controller
         $rules = [
             'title'=>'required|string|max:255|',
             'image'=>'required|string|max:255',
-            'start_date'=>'required|date',
+            'start_date'=>'required|date_format:Y-m-d',
         ];
 
         $validationFailMessages = [
@@ -32,7 +32,7 @@ class EventController extends Controller
             'image.required'=>'Insira o nome da imagem.',
             'image.string'=>'O nome da imagem precisa ser texto, contendo nome e extensão. Ex.: minha-imagem.jpg',
             'start_date.required'=>'Insira a data de início do evento.',
-            'start_date.date_format'=>'A data do evento precisa seguir o formato: d-m-Y. Ex.: 03-08-2023.'
+            'start_date.date_format'=>'A data do evento precisa seguir o formato: Y-m-d. Ex.: 2023-08-03.'
         ];
 
 
