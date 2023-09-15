@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class EventController extends Controller
 {
@@ -59,9 +60,44 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, int $id)
     {
-        //
+        $rules = [
+            'title'=>'string|max:255|',
+            'image'=>'string|max:255',
+            'start_date'=>'date_format:Y-m-d',
+        ];
+
+        $validationFailMessages = [
+            'title.max'=>'O título não pode ter mais de 255 caracteres.',
+            'image.string'=>'O nome da imagem precisa ser texto, contendo nome e extensão. Ex.: minha-imagem.jpg',
+            'start_date.date_format'=>'A data do evento precisa seguir o formato: Y-m-d. Ex.: 2023-08-03.'
+        ];
+
+        try {
+            $request->validate($rules, $validationFailMessages);
+
+            $inputs = $request->all();
+            $eventToUpdate = Event::findOrFail($id);
+
+            foreach($inputs as $input=>$value){
+                if(array_key_exists($input, $eventToUpdate->getAttributes())) {
+                    $eventToUpdate->$input = $value;
+                }
+            }
+
+            $eventToUpdate->save();
+
+            return response(
+                [                    
+                    'Novos dados:'=>$eventToUpdate
+                ],
+                201
+                );
+
+        } catch (\Throwable $e) {
+            return $e->getMessage();
+        }
     }
 
     /**
