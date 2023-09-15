@@ -20,9 +20,11 @@ use App\Http\Controllers\UserController;
 // Route::get('/users/{id}', [UserController::class, 'show']);
 // Route::put('/users/{id}', [UserController::class, 'update']);
 // Route::delete('/users/{id}', [UserController::class, 'destroy']);
-Route::post('/login', [UserController::class, 'login']);
-Route::post('/logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
 Route::apiResource('users', UserController::class);
+Route::post('/login', [UserController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/logout', [UserController::class, 'logout']);
+});
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
