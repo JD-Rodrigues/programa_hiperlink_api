@@ -13,7 +13,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        return Event::all();
+        return Event::orderBy('created_at', 'desc')->get();
     }
 
     /**
