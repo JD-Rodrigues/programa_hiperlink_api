@@ -103,8 +103,22 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy(int $id)
     {
-        //
+        try {
+            $eventToDelete = Event::findOrFail($id);
+
+            $eventToDelete->delete();
+
+            return response(
+                [
+                    'Usuário deletado:'=> $eventToDelete
+                ],
+                200
+            );
+
+        } catch (\Throwable $e) {
+            return $e->getMessage();
+        }
     }
 }
