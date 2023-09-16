@@ -8,7 +8,7 @@ use App\Models\User;
 
 class UserController extends Controller
 {
-
+    
     public function login(Request $request) 
     {
         $rules = [
@@ -69,6 +69,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {   
+
         $rules = [
             'name'=>'required|string|max:255|',
             'email'=>'required|email|max:255',

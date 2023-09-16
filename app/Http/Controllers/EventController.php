@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class EventController extends Controller
-{
+{   
     /**
      * Display a listing of the resource.
      */
