@@ -1,66 +1,100 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img width=300 src="https://raw.githubusercontent.com/JD-Rodrigues/public-assets/main/Logos/api.png" />
 </p>
 
-## About Laravel
+## 📋 Descrição:
+<p>Hiper Pass é uma estrutura backend para um sistema que gerencia usuários, eventos e ingressos adquiridos.</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🎯 Motivação:
+O projeto teve como objetivo a realização de um teste técnico.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🟡 Status do projeto:
+Sob análise.
 
-## Learning Laravel
+## 🛠️ Funcionalidades já desenvolvidas:
+- Autenticação de usuário;
+- Cadastro, remoção, edição e listagem de usuários;
+- Cadastro, remoção, edição e listagem de eventos;
+- Cadastro e listagem de ingressos adquiridos.
+  
+## 🔭 Tecnologias utilizadas:
+<b>MySQL Server</b> - Sistema de gerenciamento de banco de dados utilizado na persistência das informações.
+<b>Laravel</b> - Framework PHP utilizado na construção da API.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Como rodar a aplicação:
+### Requisitos:
+- PHP 7.4 ou superior
+- Ter o Composer instalado na máquina
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### passo a passo:
+1. Clone o Repositório:
+- Abra o terminal ou prompt de comando e navegue até o diretório onde deseja armazenar o projeto.
+- Use o comando `git clone git@github.com:JD-Rodrigues/programa_hiperlink_api.git`
+2. Instale as dependências:
+- Navegue até o diretório do projeto recém-clonado, usando o terminal.
+- Execute o comando `composer install` para instalar as dependências do projeto Laravel listadas no arquivo composer.json.
+3. Configure o banco de dados:
+- Configure seu banco de dados no arquivo `.env`.
+- Execute o comando `php artisan migrate` para criar as tabelas do banco de dados.
+4. Rodando a aplicação localmente:
+- Você pode usar o servidor de desenvolvimento do Laravel para executar o projeto localmente. Execute o comando `php artisan serve`.
+5. Acessando a aplicação:
+- Abra um navegador da web e acesse http://localhost:8000 (ou o endereço configurado para o servidor, que estará aparecendo na janela do terminal em que ele foi inicializado).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Autenticação:
+A autenticação é feita via token. É necessário incluir um token no header `Authorization`. O valor enviado neste header deve ser composto da palavra `Bearer` seguida de espaço e o token retornado no momento do login do usuário. Ex.:
+`Bearer 2|x45fdsashdushduiayouioduisfiseroiserusirsicr`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Endpoints
 
-### Premium Partners
+### -- Usuários --
+`POST api/login` - Faz login, utilizando as seguintes informações de usuário obrigatórias enviadas via corpo da requisição (não requer autenticação):
+`email`: endereço de email em formato padrão
+`password`: string
+Retorna um token de autenticação, requerido na maioria dos endpoints. É recomendado adicionar este token no header `Àuthorization` logo após recebê-lo, para que ele não seja perdido.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+`POST api/logout` - Faz logoff na aplicação (requer autenticação). 
 
-## Contributing
+`GET api/users` - Lista todos os usuários cadastrados (requer autenticação).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+`GET api/users/{id}` - Exibe o usuário cujo id for passado no parâmetro da url ()
 
-## Code of Conduct
+`POST api/users` - Cadastra um novo usuário, com as seguintes informações obrigatórias enviadas no corpo da requisição, no formato JSON (não requer autenticação):
+`name`: string
+`email`: endereço de email em formato padrão
+`password`: string
+`authorize_location`: booleano (0 para verdadeiro ou 1 para falso)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+`PUT api/users/{id}` - Atualiza o usuário cujo id for passado no parâmetro da url. As informações a serem atualizadas são enviadas no corpo da requisição, a saber: `name`, `email`, `password` e `authorize_location`. O id é o único dado obrigatório nessa requisição (requer autenticação).
 
-## Security Vulnerabilities
+`DELETE api/users/{id}` - Remove o usuário cujo id for passado no parâmetro da url (requer autenticação). 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### -- Eventos --
+`GET api/events` - Lista todos os eventos (requer autenticação)
 
-## License
+`GET api/events/{id}` - Exibe o evento cujo id for passado no parâmetro da url - (requer autenticação)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+`POST api/events` - Cadastra um novo evento, com as seguintes informações obrigatórias enviadas no corpo da requisição, no formato JSON (requer autenticação):
+`title`: string
+`image`: nome da imagem com extensão. Ex.: `evento.png`
+`start_date`: data em formato YYYY-MM-DD.
+
+
+`PUT api/events/{id}` - Atualiza o evento cujo id for passado no parâmetro da url. As informações a serem atualizadas são enviadas no corpo da requisição, a saber: `title`, `image` e `start_date`. O id é o único dado obrigatório nessa requisição. Requer autenticação.
+
+`DELETE api/events/{id}` - Remove o evento cujo id for passado no parâmetro da url (requer autenticação).
+
+### -- Ingressos --
+`GET api/tickets` - Lista todos os ingressos já adquiridos (requer autenticação).
+
+`POST api/tickets` - Cadastra um novo ingresso, com as seguintes informações obrigatórias enviadas no corpo da requisição, no formato JSON (requer autenticação):
+`id_user`: number
+`id_event`: number
+
+
+
+
+
+    
