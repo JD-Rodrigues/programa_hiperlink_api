@@ -34,3 +34,5 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/tickets', [TicketController::class, 'store']);
     Route::get('/tickets', [TicketController::class, 'index']);
 });
+
+Route::get('/', fn() => 'API root route');

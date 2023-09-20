@@ -26,7 +26,8 @@ Sob análise.
 ## Como rodar a aplicação:
 ### Requisitos:
 - PHP 7.4 ou superior
-- Ter o Composer instalado na máquina
+- Ter um banco de dados relacional
+- Ter o Composer instalado na máquina  
 
 ### passo a passo:
 1. Clone o Repositório:
@@ -36,12 +37,13 @@ Sob análise.
 - Navegue até o diretório do projeto recém-clonado, usando o terminal.
 - Execute o comando `composer install` para instalar as dependências do projeto Laravel listadas no arquivo composer.json.
 3. Configure o banco de dados:
-- Configure seu banco de dados no arquivo `.env`.
+- Renomeie o arquivo `.env.example` para `.env` e insira nele as informações de seu banco de dados.
+- Execute o comando `php artisan key:generate`, para gerar uma chave criptografada para a aplicação.
 - Execute o comando `php artisan migrate` para criar as tabelas do banco de dados.
 4. Rodando a aplicação localmente:
 - Você pode usar o servidor de desenvolvimento do Laravel para executar o projeto localmente. Execute o comando `php artisan serve`.
 5. Acessando a aplicação:
-- Abra um navegador da web e acesse http://localhost:8000 (ou o endereço configurado para o servidor, que estará aparecendo na janela do terminal em que ele foi inicializado).
+- Abra um navegador da web e acesse http://localhost:8000/api (ou o endereço configurado para o servidor, que estará aparecendo na janela do terminal em que ele foi inicializado).
 
 
 ## Autenticação:
