@@ -15,6 +15,7 @@ class TicketController extends Controller
         $tickets = Ticket::join('users', 'tickets.id_user', '=', 'users.id')
             ->join('events', 'tickets.id_event', '=', 'events.id')
             ->select(
+                'tickets.id',
                 'users.name as nome_usuario',
                 'events.title as titulo_evento',
                 'events.start_date as data_do_evento',
