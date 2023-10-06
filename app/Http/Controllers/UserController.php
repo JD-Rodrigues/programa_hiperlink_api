@@ -135,19 +135,19 @@ class UserController extends Controller
 
             $inputs = $request->all();
 
-            $usertoUpdate = User::findOrFail($id);
+            $userToUpdate = User::findOrFail($id);
 
             foreach($inputs as $input=>$value) {
-                if(array_key_exists($input, $usertoUpdate->getAttributes())){
-                    $usertoUpdate->$input = $value;
+                if(array_key_exists($input, $userToUpdate->getAttributes())){
+                    $userToUpdate->$input = $value;
                 }
             }            
 
-            $usertoUpdate->save();
+            $userToUpdate->save();
 
             return response(
                 [
-                    'Novos dados:'=>$usertoUpdate
+                    'Novos dados:'=>$userToUpdate
                 ],
                 201
             );                 
