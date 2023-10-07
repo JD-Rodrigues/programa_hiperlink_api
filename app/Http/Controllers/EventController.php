@@ -52,13 +52,13 @@ class EventController extends Controller
             $image->move('images', $imageName);
             // $image->store('images');
 
-            // return Event::create(
-            //     [
-            //         'title' => $eventTitle,
-            //         'image' => $imageName,
-            //         'start_date' => $request->input('start_date')
-            //     ]
-            // );
+            return Event::create(
+                [
+                    'title' => $eventTitle,
+                    'image' => $imageName,
+                    'start_date' => $request->input('start_date')
+                ]
+            );
             return ;
         } catch (\Throwable $e) {
             return $e->getMessage();
@@ -114,11 +114,11 @@ class EventController extends Controller
                 $imageExtension = $image->getClientOriginalExtension();
                 $imageName = "$eventSlug.$imageExtension";
                 $eventToUpdate->image = $imageName;
-                $image->move(public_path('images'), $imageName);
+                $image->move('images', $imageName);
             }
         
             
-            $eventToUpdate->save();
+            // $eventToUpdate->save();
 
             return response(
                 [                    
