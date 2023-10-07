@@ -54,7 +54,7 @@ class TicketController extends Controller
             }
 
             return [
-                'Ingresso adquirido:'=> Ticket::create($request->only(['id_user', 'id_event']))
+                'Ingresso_adquirido:'=> Ticket::create($request->only(['id_user', 'id_event']))
             ];
 
         } catch (\Throwable $e) {

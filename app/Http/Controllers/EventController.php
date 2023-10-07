@@ -119,7 +119,7 @@ class EventController extends Controller
 
             return response(
                 [                    
-                    'Novos dados:'=>$eventToUpdate
+                    'Novos_dados:'=>$eventToUpdate
                 ],
                 201
             );
@@ -142,7 +142,7 @@ class EventController extends Controller
 
             return response(
                 [
-                    'Usuário deletado:'=> $eventToDelete
+                    $eventToDelete
                 ],
                 200
             );
