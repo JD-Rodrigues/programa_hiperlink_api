@@ -93,7 +93,14 @@ class UserController extends Controller
         try {
             $request->validate($rules, $validationFailMessages);
 
+            $userAlreadyExists = User::where('email', $request->input('email'))->whereNull('deleted_at')->get();
+
+            if (count($userAlreadyExists) > 0) {
+                return "Este usuário já existe";
+            }
+
             return User::create($request->only('name',  'email', 'password', 'authorize_location'));
+
         } catch (\Throwable $e) {
             return $e->getMessage();
         }
@@ -147,7 +154,7 @@ class UserController extends Controller
 
             return response(
                 [
-                    'Novos dados:'=>$userToUpdate
+                    'Novos_dados:'=>$userToUpdate
                 ],
                 201
             );                 
@@ -171,7 +178,7 @@ class UserController extends Controller
 
             return response(
                 [
-                    'Usuário deletado:'=> $userToDelete
+                    'Usuário_deletado:'=> $userToDelete
                 ],
                 200
             );
