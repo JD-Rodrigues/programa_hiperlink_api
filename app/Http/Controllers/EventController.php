@@ -97,8 +97,11 @@ class EventController extends Controller
             $request->validate($rules, $validationFailMessages);
 
             $inputs = $request->all();
-            $imageName = '';
-            $eventToUpdate = Event::findOrFail($id);            
+            $image = $request->file('image');
+
+            $eventToUpdate = Event::findOrFail($id);                
+            
+            $image && Storage::delete($eventToUpdate->image);
 
             foreach($inputs as $input=>$value){
                 if(array_key_exists($input, $eventToUpdate->getAttributes())) {
@@ -106,19 +109,13 @@ class EventController extends Controller
                 }
             }
 
-            if ($request->file('image')){
-                $eventTitle = $request->input('title') ?? $eventToUpdate->title;
-                $eventSlug = Str::slug($eventTitle);
-
-                $image = $request->file('image');
-                $imageExtension = $image->getClientOriginalExtension();
-                $imageName = "$eventSlug.$imageExtension";
-                $eventToUpdate->image = $imageName;
-                $image->move('images', $imageName);
+            if ($image){                
+                $imagePath = $image->store();
+                $eventToUpdate->image = $imagePath;
             }
         
             
-            // $eventToUpdate->save();
+            $eventToUpdate->save();
 
             return response(
                 [                    
