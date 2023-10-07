@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name')->required();
-            $table->string('email')->unique()->required();
+            $table->string('email')->required();
             $table->string('password')->required();
             $table->boolean('authorize_location')->default(false)->required();
             $table->timestamps();
