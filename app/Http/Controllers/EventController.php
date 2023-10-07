@@ -49,13 +49,13 @@ class EventController extends Controller
             
             $imageExtension = $image->getClientOriginalExtension();
             $imageName = "$eventSlug.$imageExtension";
-            $image->move('images', $imageName);
-            // $image->store('images');
+            // $image->move('images', $imageName);
+            $imagePath = $image->store();
 
             return Event::create(
                 [
                     'title' => $eventTitle,
-                    'image' => $imageName,
+                    'image' => $imagePath,
                     'start_date' => $request->input('start_date')
                 ]
             );
@@ -140,8 +140,10 @@ class EventController extends Controller
     {
         try {
             $eventToDelete = Event::findOrFail($id);
-
+            $imageToDelete = $eventToDelete->image;
+            Storage::delete($imageToDelete);
             $eventToDelete->delete();
+            
 
             return response(
                 [
