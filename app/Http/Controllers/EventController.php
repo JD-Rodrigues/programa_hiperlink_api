@@ -6,6 +6,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {   
@@ -45,17 +46,19 @@ class EventController extends Controller
             $eventSlug = Str::slug($eventTitle);
 
             $image = $request->file('image');
+            
             $imageExtension = $image->getClientOriginalExtension();
             $imageName = "$eventSlug.$imageExtension";
-            $image->move(public_path('images'), $imageName);
+            $image->move('images', $imageName);
+            // $image->store('images');
 
-            return Event::create(
-                [
-                    'title' => $eventTitle,
-                    'image' => $imageName,
-                    'start_date' => $request->input('start_date')
-                ]
-            );
+            // return Event::create(
+            //     [
+            //         'title' => $eventTitle,
+            //         'image' => $imageName,
+            //         'start_date' => $request->input('start_date')
+            //     ]
+            // );
             return ;
         } catch (\Throwable $e) {
             return $e->getMessage();
