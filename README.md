@@ -10,13 +10,14 @@
 O projeto teve como objetivo a realização de um teste técnico.
 
 ## 🟡 Status do projeto:
-Sob análise.
+✅ Aprovado.
 
 ## 🛠️ Funcionalidades já desenvolvidas:
 - Autenticação de usuário;
 - Cadastro, remoção, edição e listagem de usuários;
 - Cadastro, remoção, edição e listagem de eventos;
 - Cadastro e listagem de ingressos adquiridos.
+- Suporta upload das imagens dos eventos
 - Fornece uma API com endpoints para todas as operações.
   
 ## 🔭 Tecnologias utilizadas:
